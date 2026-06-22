@@ -211,23 +211,32 @@
       .fl-field { gap: 6px !important; }
       #fl-form { gap: 16px !important; padding: 20px !important; }
 
-      /* Input fecha: mismo ancho que los demás */
+      /* Input fecha: mismo tamaño que los demás (forzado) */
+      .fl-field:has(input[type="date"]) { width: 100%; }
       input[type="date"].fl-input {
         display: block !important;
         width: 100% !important;
+        min-width: 0 !important;
         max-width: 100% !important;
+        min-height: 46px !important;
+        height: 46px !important;
         box-sizing: border-box !important;
+        -webkit-appearance: none !important;
+        appearance: none !important;
+        padding: 11px 14px !important;
       }
 
-      /* Segunda frase (camino-ruta): texto un poco más abajo y centrado, sin tapar la foto */
+      /* Segunda frase (camino-ruta): texto más grande, centrado, sin tapar */
       .fl-frase-ruta {
         align-items: flex-start !important;
-        padding-top: clamp(60px,14vw,100px) !important;
-        padding-left: clamp(28px,8vw,48px) !important;
-        padding-right: clamp(28px,8vw,48px) !important;
-        background-position: center bottom !important;
+        justify-content: center !important;
+        padding-top: clamp(48px,12vw,80px) !important;
+        padding-left: clamp(24px,6vw,40px) !important;
+        padding-right: clamp(24px,6vw,40px) !important;
+        background-position: center 75% !important;
       }
-      .fl-frase-ruta p { font-size: clamp(1.4rem,5vw,2rem) !important; }
+      .fl-frase-ruta > div[data-reveal] { max-width: 100% !important; margin: 0 auto !important; }
+      .fl-frase-ruta p { font-size: clamp(1.7rem,5.5vw,2.4rem) !important; }
 
       /* Footer: todo centrado en columna */
       .fl-footer-row {
