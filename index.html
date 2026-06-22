@@ -193,16 +193,40 @@
       /* Toggle en order 1 para que quede arriba siempre */
       .fl-card-toggle { order: 1; }
 
-      /* Quees */
-      .fl-quees { align-items: center !important; }
-      .fl-quees-img { flex: 1 1 100% !important; max-width: 360px !important; margin: 0 auto !important; }
+      /* Quees: foto de Paula más chica */
+      .fl-quees { align-items: center !important; flex-direction: column !important; }
+      .fl-quees-img { flex: 1 1 100% !important; max-width: 200px !important; margin: 0 auto !important; }
+
+      /* Sección frase niebla: texto centrado con más padding lateral */
+      .fl-frase-niebla { padding-left: clamp(28px,8vw,48px) !important; padding-right: clamp(28px,8vw,48px) !important; align-items: center !important; }
+      .fl-frase-niebla > div[data-reveal] { max-width: 100% !important; }
+
+      /* Formulario: inputs y select a tamaño legible, sin cortes */
+      .fl-input, .fl-textarea, .fl-select {
+        font-size: 0.95rem !important;
+        padding: 11px 14px !important;
+      }
+      .fl-select { padding-right: 36px !important; }
+      .fl-label { font-size: 0.8rem !important; }
+      .fl-field { gap: 6px !important; }
+      #fl-form { gap: 16px !important; padding: 20px !important; }
+
+      /* Footer: todo centrado en columna */
+      .fl-footer-row {
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        gap: 16px !important;
+      }
+      .fl-footer-row > div { flex-direction: column !important; align-items: center !important; gap: 12px !important; }
+      .fl-footer-row > div > span { display: none !important; } /* ocultar separador vertical */
     }
 
     @media (max-width: 520px) {
       .fl-hero { padding-top: 100px !important; }
       .fl-step { gap: 14px !important; }
       .fl-step-dot { width: 46px !important; height: 46px !important; }
-      .fl-footer-row { justify-content: flex-start !important; }
     }
   </style>
 </head>
@@ -257,7 +281,7 @@
   </section>
 
   <!-- FRASE DESTACADA · niebla -->
-  <section style="position:relative; min-height:clamp(440px,72vh,660px); display:flex; align-items:flex-start; justify-content:center; text-align:center; padding:clamp(64px,9vw,120px) clamp(20px,5vw,48px); background-image:url('assets/montana-niebla.png'); background-size:cover; background-position:center; overflow:hidden;">
+  <section class="fl-frase-niebla" style="position:relative; min-height:clamp(440px,72vh,660px); display:flex; align-items:flex-start; justify-content:center; text-align:center; padding:clamp(64px,9vw,120px) clamp(20px,5vw,48px); background-image:url('assets/montana-niebla.png'); background-size:cover; background-position:center; overflow:hidden;">
     <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(28,31,44,0.82) 0%, rgba(28,31,44,0.42) 40%, rgba(28,31,44,0.30) 70%, rgba(28,31,44,0.58) 100%);"></div>
     <div class="fl-grain" style="position:absolute; inset:0;"></div>
     <div data-reveal style="position:relative; max-width:880px; margin:0;">
