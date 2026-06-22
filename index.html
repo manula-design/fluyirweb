@@ -211,6 +211,27 @@
       .fl-field { gap: 6px !important; }
       #fl-form { gap: 16px !important; padding: 20px !important; }
 
+      /* Input fecha: mismo tamaño que los demás */
+      input[type="date"].fl-input {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        min-height: 48px !important;
+        height: auto !important;
+        padding: 11px 14px !important;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      /* Segunda frase (camino-ruta): texto abajo para no tapar la foto */
+      .fl-frase-ruta {
+        align-items: flex-end !important;
+        padding-bottom: clamp(32px,6vw,64px) !important;
+        min-height: clamp(340px,55vh,500px) !important;
+        background-position: top center !important;
+      }
+      .fl-frase-ruta p { font-size: clamp(1.4rem,5vw,2rem) !important; }
+      .fl-frase-ruta .fl-grain { display: none; }
+
       /* Footer: todo centrado en columna */
       .fl-footer-row {
         flex-direction: column !important;
@@ -580,7 +601,7 @@
   </section>
 
   <!-- FRASE DESTACADA 2 -->
-  <section style="position:relative; min-height:clamp(440px,72vh,660px); display:flex; align-items:flex-start; justify-content:center; text-align:center; padding:clamp(20px,3vw,40px) clamp(20px,5vw,48px) clamp(56px,8vw,104px); background-image:url('assets/camino-ruta.png'); background-size:cover; background-position:center; overflow:hidden;">
+  <section class="fl-frase-ruta" style="position:relative; min-height:clamp(440px,72vh,660px); display:flex; align-items:flex-start; justify-content:center; text-align:center; padding:clamp(20px,3vw,40px) clamp(20px,5vw,48px) clamp(56px,8vw,104px); background-image:url('assets/camino-ruta.png'); background-size:cover; background-position:center; overflow:hidden;">
     <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(28,31,44,0.82) 0%, rgba(28,31,44,0.42) 40%, rgba(28,31,44,0.30) 70%, rgba(28,31,44,0.58) 100%);"></div>
     <div class="fl-grain" style="position:absolute; inset:0;"></div>
     <div data-reveal style="position:relative; max-width:880px; margin:0;">
