@@ -102,57 +102,100 @@
     .fl-ig:hover { color: var(--link) !important; border-color: var(--cream-a40) !important; }
 
     /* ---- Cards: acordeón mobile ---- */
-    .fl-card-toggle {
-      display: none; /* oculto en desktop */
-    }
+    .fl-card-toggle { display: none; }
 
     @media (max-width: 760px) {
-      /* Cards: una debajo de la otra, ancho completo */
+      /* Lista apilada */
       .fl-cards-wrap { flex-direction: column !important; align-items: stretch !important; }
-      .fl-card { flex: 1 1 100% !important; max-width: 100% !important; flex-direction: column !important; overflow: visible !important; }
+      .fl-card {
+        flex: 1 1 100% !important;
+        max-width: 100% !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+      }
 
-      /* Botón toggle visible en mobile */
+      /* Botón toggle */
       .fl-card-toggle {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
+        gap: 12px;
         width: 100%;
         background: none;
         border: none;
-        padding: 20px 22px;
+        padding: 22px 20px;
         cursor: pointer;
         text-align: left;
         color: inherit;
         font-family: var(--font-body);
       }
-      .fl-card-toggle-left { display: flex; align-items: center; gap: 14px; }
-      .fl-card-toggle-titles { display: flex; flex-direction: column; gap: 3px; }
-      .fl-card-toggle-title { font-size: 1.1rem; font-weight: 500; color: var(--cream); line-height: 1.1; }
-      .fl-card-toggle-sub { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.02em; color: var(--cream-a64); }
+      .fl-card-toggle-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+      .fl-card-toggle-titles { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 
-      /* Chevron animado */
-      .fl-chevron { flex: none; color: var(--cream-a64); transition: transform 0.3s var(--ease-flow); }
-      .fl-card.is-open .fl-chevron { transform: rotate(180deg); }
+      /* Título: grande, peso heading */
+      .fl-card-toggle-title {
+        font-family: var(--font-body);
+        font-size: 1.35rem;
+        font-weight: 500;
+        color: var(--cream);
+        line-height: 1.1;
+        letter-spacing: -0.01em;
+      }
+      /* Tagline: pequeño, light */
+      .fl-card-toggle-sub {
+        font-family: var(--font-body);
+        font-size: 0.82rem;
+        font-weight: 300;
+        letter-spacing: 0.01em;
+        color: var(--cream-200);
+        line-height: 1.3;
+      }
+
+      /* Chevron */
+      .fl-chevron { flex: none; color: var(--cream-a40); transition: transform 0.3s var(--ease-flow); }
+      .fl-card.is-open .fl-chevron { transform: rotate(180deg); color: var(--turquoise-soft); }
+      .fl-card.is-open { border-color: var(--turquoise-soft); }
+
+      /* Icono en toggle: un poco más pequeño */
+      .fl-card-toggle-left > span svg { width: 20px; height: 20px; }
 
       /* Header desktop oculto en mobile */
       .fl-card-head-desk { display: none !important; }
 
-      /* Contenido colapsable */
+      /* Subname y bajada del desktop también ocultos en el encabezado del acordeón */
+      .fl-card-content > span { display: none; }
+
+      /* Contenido: oculto por defecto, visible al abrir */
       .fl-card-content {
         display: none;
         flex-direction: column;
         align-items: flex-start;
-        padding: 0 22px 22px;
-        border-top: 1px solid var(--cream-a08);
+        padding: 0 20px 24px;
+        order: 2;
       }
       .fl-card.is-open .fl-card-content { display: flex; }
-      .fl-card.is-open { border-color: var(--turquoise-soft); }
 
-      /* Imagen dentro del contenido colapsado */
-      .fl-card-img-wrap { display: none !important; }
-      .fl-card.is-open .fl-card-img-wrap { display: block !important; width: 100%; margin-bottom: 18px; }
-      .fl-card.is-open .fl-card-img-wrap img { aspect-ratio: 16/9; object-fit: cover; width: 100%; border-radius: var(--radius-md); }
+      /* Imagen: siempre oculta en mobile; aparece DESPUÉS del texto (order) */
+      .fl-card-img-wrap {
+        display: none !important;
+        order: 3;
+        border-bottom: none !important;
+        border-top: 1px solid var(--cream-a08);
+      }
+      .fl-card.is-open .fl-card-img-wrap {
+        display: block !important;
+        width: 100%;
+      }
+      .fl-card.is-open .fl-card-img-wrap img {
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        width: 100%;
+        border-radius: 0;
+        display: block;
+      }
+
+      /* Toggle en order 1 para que quede arriba siempre */
+      .fl-card-toggle { order: 1; }
 
       /* Quees */
       .fl-quees { align-items: center !important; }
