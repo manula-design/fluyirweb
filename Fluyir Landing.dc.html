@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/fluyir-design-system-b40d3434-4b3b-41a9-a6b1-4f23c2229881/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/fluyir-design-system-b40d3434-4b3b-41a9-a6b1-4f23c2229881/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/fluyir-design-system-b40d3434-4b3b-41a9-a6b1-4f23c2229881/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/fluyir-design-system-b40d3434-4b3b-41a9-a6b1-4f23c2229881/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/fluyir-design-system-b40d3434-4b3b-41a9-a6b1-4f23c2229881/tokens/effects.css">
+  <link rel="stylesheet" href="_ds/fluyir-design-system-b40d3434-4b3b-41a9-a6b1-4f23c2229881/tokens/base.css">
+  <link rel="stylesheet" href="_ds/fluyir-design-system-b40d3434-4b3b-41a9-a6b1-4f23c2229881/styles.css">
+  <script src="_ds/fluyir-design-system-b40d3434-4b3b-41a9-a6b1-4f23c2229881/_ds_bundle.js"></script>
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body { background: var(--night); margin: 0; }
+    @keyframes flGlow { 0%, 100% { opacity: .45; transform: translate(-50%, -50%) scale(1); } 50% { opacity: .85; transform: translate(-50%, -50%) scale(1.1); } }
+    @keyframes flFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+    /* ---- Adaptaciones mobile (no alteran el diseño en desktop) ---- */
+    @media (max-width: 760px) {
+      /* Cards de informes: una por fila, a todo el ancho disponible, centradas */
+      .fl-card { flex: 1 1 100% !important; max-width: 460px !important; }
+      /* "Qué es un informe": imagen centrada y a todo el ancho debajo del texto */
+      .fl-quees { align-items: center !important; }
+      .fl-quees-img { flex: 1 1 100% !important; max-width: 360px !important; margin: 0 auto !important; }
+    }
+    @media (max-width: 520px) {
+      /* Hero: menos aire arriba para que el contenido entre en viewport */
+      .fl-hero { padding-top: 100px !important; }
+      /* Pasos 01·02·03: círculo un poco más chico y menos gap */
+      .fl-step { gap: 14px !important; }
+      .fl-step-dot { width: 46px !important; height: 46px !important; }
+      /* Footer: alinear a la izquierda al apilarse */
+      .fl-footer-row { justify-content: flex-start !important; }
+    }
+  </style>
+</helmet>
+
+<div style="position:relative; width:100%; overflow-x:hidden; background:{{ pageBg }}; color:var(--cream); font-family:var(--font-body); --accent-quiet:var(--turquoise-soft); --glow:var(--turquoise-soft);">
+
+  <!-- ===================== FONDO COMPLETO (opción: imagen del hero detrás de toda la web) ===================== -->
+  <sc-if value="{{ fondoCompleto }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; inset:0; z-index:0; background-image:url('assets/fondo-historias-1.png'); background-size:cover; background-position:center; pointer-events:none;"></div>
+    <div style="position:fixed; inset:0; z-index:0; background:linear-gradient(180deg, rgba(31,34,46,0.74) 0%, rgba(31,34,46,0.82) 100%); pointer-events:none;"></div>
+  </sc-if>
+
+  <div style="position:relative; z-index:1;">
+
+  <!-- ===================== NAV ===================== -->
+  <nav id="fl-nav" style="position:fixed; top:0; left:0; right:0; z-index:60; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px clamp(20px,5vw,48px); background:transparent; transition:transform .35s var(--ease-flow), background .35s var(--ease-flow), backdrop-filter .35s var(--ease-flow);" data-comment-anchor="f2e37f15f6-nav">
+    <a href="#top" style="display:flex; align-items:center;"><img src="assets/logo-wordmark-cream-trim.png" alt="fluyir" style="height:38px; width:auto;"></a>
+    <div style="display:flex; align-items:center; gap:clamp(18px,4vw,34px);">
+      <a href="#informes" style="font-family:var(--font-body); font-size:0.9rem; font-weight:500; letter-spacing:0.02em; color:var(--cream-200);">Informes</a>
+      <a href="#contacto" style="font-family:var(--font-body); font-size:0.9rem; font-weight:500; letter-spacing:0.02em; color:var(--cream-200);">Contacto</a>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO · atmosférica (centrado) ===================== -->
+  <sc-if value="{{ isAtmos }}" hint-placeholder-val="{{ true }}">
+    <header id="top" class="fl-hero" style="position:relative; min-height:100svh; display:flex; align-items:center; justify-content:center; text-align:center; padding:128px clamp(20px,5vw,48px) clamp(40px,5vw,60px); overflow:hidden;">
+      <sc-if value="{{ showOwnHeroBg }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute; inset:0; background-image:url('assets/fondo-historias-1.png'); background-size:cover; background-position:center;"></div>
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(31,34,46,0.55) 0%, rgba(31,34,46,0.42) 38%, rgba(31,34,46,0.86) 100%);"></div>
+      </sc-if>
+      <sc-if value="{{ showGrain }}" hint-placeholder-val="{{ true }}"><div class="fl-grain" style="position:absolute; inset:0;"></div></sc-if>
+      <div style="position:relative; max-width:940px;">
+        <p class="fl-eyebrow" style="text-align:center;">Numerología · Escritura · Libros</p>
+        <h1 style="font-family:var(--font-body); font-weight:500; font-size:clamp(2.4rem,6vw,4.5rem); line-height:1.12; color:var(--cream); margin:20px 0 0; text-wrap:balance;">Desarmar lo aprendido, para re-conocerte.</h1>
+        <p style="font-family:var(--font-body); font-weight:400; font-size:clamp(1.05rem,2vw,1.35rem); line-height:1.6; color:var(--cream-200); max-width:640px; margin:32px auto 0;">Un espacio de autoconocimiento que no le escapa a la sombra. Se mira lo que potencia y lo que incomoda por igual, con la misma honestidad. Sin glitter.</p>
+        <p style="font-family:var(--font-body); font-weight:500; font-size:clamp(0.95rem,1.5vw,1.1rem); line-height:1.6; color:var(--glow); max-width:540px; margin:18px auto 0;">Informes escritos y personalizados para reconocerte con más claridad y menos autojuicio.</p>
+        <div style="margin-top:38px; display:flex; justify-content:center;">
+          <x-import component-from-global-scope="FluyirDesignSystem_b40d34.Button" variant="primary" size="lg" onClick="{{ goInformes }}" hint-size="auto,52px">Conocé los informes</x-import>
+        </div>
+      </div>
+    </header>
+  </sc-if>
+
+  <!-- ===================== HERO · noche + glow (centrado) ===================== -->
+  <sc-if value="{{ isNoche }}" hint-placeholder-val="{{ false }}">
+    <header id="top" style="position:relative; min-height:100svh; display:flex; align-items:center; justify-content:center; text-align:center; padding:128px clamp(20px,5vw,48px) clamp(72px,8vw,104px); background:radial-gradient(circle at 50% 36%, #383D52 0%, #2D3142 46%, #2D3142 100%); overflow:hidden;">
+      <div style="position:absolute; top:34%; left:50%; width:min(720px,92vw); height:min(720px,92vw); background:radial-gradient(circle, rgba(201,138,75,0.30), rgba(201,138,75,0.05) 45%, transparent 64%); filter:blur(18px); animation:flGlow 9s var(--ease-flow) infinite; pointer-events:none;"></div>
+      <sc-if value="{{ showGrain }}" hint-placeholder-val="{{ true }}"><div class="fl-grain" style="position:absolute; inset:0;"></div></sc-if>
+      <div style="position:relative; max-width:860px;">
+        <p class="fl-eyebrow" style="text-align:center;">Numerología · Escritura · Libros</p>
+        <h1 style="font-family:var(--font-body); font-weight:500; font-size:clamp(2.5rem,6.4vw,4.7rem); line-height:1.12; color:var(--cream); margin:22px 0 0; text-wrap:balance;">Desarmar lo aprendido, para re-conocerte.</h1>
+        <p style="font-family:var(--font-body); font-size:clamp(1.05rem,2vw,1.35rem); line-height:1.6; color:var(--cream-200); max-width:640px; margin:30px auto 0;">Un espacio de autoconocimiento que no le escapa a la sombra. Se mira lo que potencia y lo que incomoda por igual, con la misma honestidad. Sin glitter.</p>
+        <p style="font-family:var(--font-body); font-weight:500; font-size:clamp(0.95rem,1.5vw,1.1rem); line-height:1.6; color:var(--glow); max-width:540px; margin:18px auto 0;">Informes escritos y personalizados para reconocerte con más claridad y menos autojuicio.</p>
+        <div style="margin-top:38px; display:flex; justify-content:center;">
+          <x-import component-from-global-scope="FluyirDesignSystem_b40d34.Button" variant="primary" size="lg" onClick="{{ goInformes }}" hint-size="auto,52px">Conocé los informes</x-import>
+        </div>
+      </div>
+    </header>
+  </sc-if>
+
+  <!-- ===================== HERO · editorial split ===================== -->
+  <sc-if value="{{ isEditorial }}" hint-placeholder-val="{{ false }}">
+    <header id="top" style="display:flex; flex-wrap:wrap; min-height:100svh; padding-top:64px;">
+      <div style="flex:1 1 460px; display:flex; flex-direction:column; justify-content:center; padding:clamp(56px,7vw,104px) clamp(24px,5vw,72px); background:var(--night);">
+        <p class="fl-eyebrow">Numerología · Escritura · Libros</p>
+        <h1 style="font-family:var(--font-body); font-weight:500; font-size:clamp(2.4rem,5vw,4.2rem); line-height:1.12; color:var(--cream); margin:20px 0 0; text-wrap:balance;">Desarmar lo aprendido, para re-conocerte.</h1>
+        <p style="font-family:var(--font-body); font-size:clamp(1.05rem,1.6vw,1.3rem); line-height:1.6; color:var(--cream-200); max-width:560px; margin:28px 0 0;">Un espacio de autoconocimiento que no le escapa a la sombra. Se mira lo que potencia y lo que incomoda por igual, con la misma honestidad. Sin glitter.</p>
+        <p style="font-family:var(--font-body); font-weight:500; font-size:clamp(0.95rem,1.5vw,1.1rem); line-height:1.6; color:var(--glow); max-width:480px; margin:16px 0 0;">Informes escritos y personalizados para reconocerte con más claridad y menos autojuicio.</p>
+        <div style="margin-top:36px;">
+          <x-import component-from-global-scope="FluyirDesignSystem_b40d34.Button" variant="primary" size="lg" onClick="{{ goInformes }}" hint-size="auto,52px">Conocé los informes</x-import>
+        </div>
+      </div>
+      <div style="flex:1 1 380px; position:relative; min-height:48vh; overflow:hidden; background-image:url('assets/fondo-historias-1.png'); background-size:cover; background-position:center;">
+        <div style="position:absolute; inset:0; background:linear-gradient(105deg, rgba(31,34,46,0.85) 0%, rgba(31,34,46,0.25) 38%, transparent 75%);"></div>
+        <img src="assets/iso-f-cream.png" alt="" style="position:absolute; right:6%; bottom:6%; width:clamp(80px,14vw,150px); opacity:0.5; animation:flFloat 11s var(--ease-flow) infinite;">
+        <sc-if value="{{ showGrain }}" hint-placeholder-val="{{ true }}"><div class="fl-grain" style="position:absolute; inset:0;"></div></sc-if>
+      </div>
+    </header>
+  </sc-if>
+
+  <!-- ===================== QUÉ ES UN INFORME ===================== -->
+  <section style="position:relative; overflow:hidden; padding:clamp(56px,7vw,92px) clamp(20px,5vw,48px) clamp(76px,10vw,132px); background:{{ secBg }};">
+    <sc-if value="{{ showGrain }}" hint-placeholder-val="{{ true }}"><div class="fl-grain" style="position:absolute; inset:0; pointer-events:none;"></div></sc-if>
+    <div data-reveal class="fl-quees" style="position:relative; max-width:var(--container-wide); margin:0 auto; display:flex; flex-wrap:wrap; gap:clamp(36px,6vw,72px); align-items:flex-end;">
+      <div style="flex:1 1 440px; min-width:0;">
+        <p class="fl-eyebrow">Qué es un informe Fluyir</p>
+        <h2 style="font-family:var(--font-body); font-weight:500; font-size:clamp(1.9rem,4.4vw,3rem); line-height:1.16; color:var(--cream); margin:16px 0 0; text-wrap:balance;">Un viaje para ir más allá de lo conocido.</h2>
+        <p style="font-size:clamp(1rem,1.6vw,1.1rem); line-height:1.75; color:var(--cream-200); margin:26px 0 0;">Cada informe se arma con tu nombre completo y tu fecha de nacimiento. A partir de esos datos, la numerología funciona como un lenguaje para nombrar lo que se siente pero todavía no se entiende: los patrones que se repiten, las cualidades que tenés pero no usás, las partes de vos que aprendiste a esconder porque en algún momento no fue seguro mostrarlas.</p>
+        <p style="font-size:clamp(1rem,1.6vw,1.1rem); line-height:1.75; color:var(--cream-200); margin:18px 0 0;">Es información, no un veredicto. Un lugar al que volver en distintos momentos, porque lo que encontrás ahí puede no cambiar, pero la forma en que lo entendés y lo mirás sí.</p>
+        <p style="font-size:clamp(1rem,1.6vw,1.1rem); line-height:1.75; color:var(--cream-200); margin:18px 0 0;">Se entregan en formato digital. El proceso de leerlos, de volver a ellos, de dejar que decanten, es tuyo: a tu ritmo, en tu tiempo.</p>
+      </div>
+      <div class="fl-quees-img" style="flex:0 1 300px; max-width:320px;">
+        <img src="assets/escritura-tren.png" alt="Paula escribiendo" style="display:block; width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:3px; box-shadow:var(--shadow-lg);">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FRASE DESTACADA · niebla ===================== -->
+  <section style="position:relative; min-height:clamp(440px,72vh,660px); display:flex; align-items:flex-start; justify-content:center; text-align:center; padding:clamp(64px,9vw,120px) clamp(20px,5vw,48px); background-image:url('assets/montana-niebla.png'); background-size:cover; background-position:center; overflow:hidden;">
+    <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(28,31,44,0.82) 0%, rgba(28,31,44,0.42) 40%, rgba(28,31,44,0.30) 70%, rgba(28,31,44,0.58) 100%);"></div>
+    <sc-if value="{{ showGrain }}" hint-placeholder-val="{{ true }}"><div class="fl-grain" style="position:absolute; inset:0;"></div></sc-if>
+    <div data-reveal style="position:relative; max-width:880px; margin:0;">
+      <p style="font-family:var(--font-script); font-weight:400; font-size:clamp(1.9rem,4.4vw,3.1rem); line-height:1.35; letter-spacing:0.05em; color:var(--cream); margin:0; text-wrap:balance; text-shadow:0 2px 28px rgba(12,14,20,0.55);">atravesar un <span style="font-family:var(--font-body); font-weight:600; font-size:0.72em;">momento</span> oscuro,<br>no te convierte en una <span style="font-family:var(--font-body); font-weight:600; font-size:0.72em;">persona</span> oscura.</p>
+      <img src="assets/iso-f-cream.png" alt="fluyir" style="width:clamp(58px,7vw,86px); height:auto; display:block; margin:24px auto 0; opacity:0.92;">
+    </div>
+  </section>
+
+  <!-- ===================== LOS INFORMES ===================== -->
+  <section id="informes" style="position:relative; overflow:hidden; scroll-margin-top:84px; padding:clamp(76px,10vw,132px) clamp(20px,5vw,48px) clamp(44px,5vw,68px); background:{{ secBg }};">
+    <sc-if value="{{ showGrain }}" hint-placeholder-val="{{ true }}"><div class="fl-grain" style="position:absolute; inset:0; pointer-events:none;"></div></sc-if>
+    <div style="position:relative; max-width:var(--container-wide); margin:0 auto;">
+      <div data-reveal style="text-align:center; max-width:660px; margin:0 auto clamp(44px,6vw,64px);">
+        <p class="fl-eyebrow" style="text-align:center;">Cinco lecturas</p>
+        <h2 style="font-family:var(--font-body); font-weight:500; font-size:clamp(2.1rem,5vw,3.2rem); line-height:1.14; color:var(--cream); margin:14px 0 0;">Los informes</h2>
+        <p style="font-size:clamp(1rem,1.6vw,1.15rem); line-height:1.65; color:var(--cream-200); margin:18px 0 0;">Cinco formas distintas de mirarte, complementarias entre sí.</p>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:24px; max-width:1008px; margin:0 auto;">
+        <sc-for list="{{ informes }}" as="inf" hint-placeholder-count="5">
+          <div class="fl-card" style="flex:0 0 320px; max-width:320px; display:flex; flex-direction:column; align-items:flex-start; background:{{ inf.cardBg }}; backdrop-filter:{{ inf.cardBlur }}; -webkit-backdrop-filter:{{ inf.cardBlur }}; border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-md);">
+            <div style="width:100%; border-bottom:1px solid var(--cream-a08); overflow:hidden; aspect-ratio:16/10; background:transparent;">
+              <sc-if value="{{ inf.cover }}" hint-placeholder-val="{{ false }}">
+                <img src="{{ inf.cover }}" alt="Vista previa del informe" style="display:block; width:100%; aspect-ratio:16/10; object-fit:cover;">
+              </sc-if>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:flex-start; padding:clamp(20px,2.8vw,28px);">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span style="display:inline-flex; flex:none; color:var(--accent-quiet);">
+                  <sc-if value="{{ inf.isMapa }}" hint-placeholder-val="{{ false }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg></sc-if>
+                  <sc-if value="{{ inf.isEquipaje }}" hint-placeholder-val="{{ false }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7"></path><line x1="9" y1="11" x2="9" y2="20"></line><line x1="15" y1="11" x2="15" y2="20"></line></svg></sc-if>
+                  <sc-if value="{{ inf.isBrujula }}" hint-placeholder-val="{{ false }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"></circle><polygon points="15.8 8.2 13.7 13.7 8.2 15.8 10.3 10.3 15.8 8.2"></polygon></svg></sc-if>
+                  <sc-if value="{{ inf.isRuta }}" hint-placeholder-val="{{ false }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="2.6"></circle><circle cx="18" cy="5" r="2.6"></circle><path d="M8.6 19h6.4a3.4 3.4 0 0 0 0-6.8H9a3.4 3.4 0 0 1 0-6.8h6.4"></path></svg></sc-if>
+                  <sc-if value="{{ inf.isCoordenadas }}" hint-placeholder-val="{{ false }}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 10.5c0 5.2-7.5 10.5-7.5 10.5S4.5 15.7 4.5 10.5a7.5 7.5 0 0 1 15 0Z"></path><circle cx="12" cy="10.3" r="2.6"></circle></svg></sc-if>
+                </span>
+                <h3 style="font-family:var(--font-body); font-weight:500; font-size:clamp(1.32rem,3vw,1.65rem); line-height:1.08; letter-spacing:-0.005em; color:var(--cream); margin:0;">{{ inf.keyword }}</h3>
+              </div>
+              <span style="display:block; font-family:var(--font-body); font-size:0.8rem; font-weight:500; letter-spacing:0.02em; color:var(--cream-a64); margin-top:8px;">{{ inf.subname }}</span>
+              <span style="display:block; font-family:var(--font-body); font-size:0.9rem; font-weight:500; letter-spacing:0.01em; color:var(--glow); margin-top:11px;">{{ inf.bajada }}</span>
+              <p style="font-size:0.92rem; line-height:1.62; color:var(--cream-200); margin:13px 0 0;">{{ inf.resumen }}</p>
+              <a href="{{ inf.href }}" style="display:inline-flex; align-items:center; gap:8px; margin-top:22px; text-decoration:none; font-family:var(--font-body); font-size:0.9rem; font-weight:600; color:var(--link); letter-spacing:0.01em;">
+                <span>Ver informe</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ASÍ FUNCIONA (pasos en columna) + FORMULARIO ===================== -->
+  <section id="contacto" style="position:relative; overflow:hidden; scroll-margin-top:84px; padding:clamp(44px,5vw,68px) clamp(20px,5vw,48px) clamp(76px,10vw,132px); background:{{ secBg }};">
+    <sc-if value="{{ showGrain }}" hint-placeholder-val="{{ true }}"><div class="fl-grain" style="position:absolute; inset:0; pointer-events:none;"></div></sc-if>
+    <div style="position:relative; max-width:var(--container-wide); margin:0 auto;">
+      <div data-reveal style="text-align:center; max-width:620px; margin:0 auto clamp(48px,6vw,72px);">
+        <p class="fl-eyebrow" style="text-align:center;">Cómo pedirlo</p>
+        <h2 style="font-family:var(--font-body); font-weight:500; font-size:clamp(2.1rem,5vw,3.2rem); line-height:1.14; color:var(--cream); margin:14px 0 0;">Así funciona</h2>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap:clamp(40px,6vw,72px); align-items:start; max-width:1040px; margin:0 auto;">
+
+        <!-- Columna de pasos 1·2·3 -->
+        <div data-reveal style="display:flex; flex-direction:column; gap:clamp(26px,3.4vw,38px);">
+
+          <div class="fl-step" style="display:flex; align-items:flex-start; gap:20px;">
+            <div class="fl-step-dot" style="flex:none; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--cream-a08); border:1px solid var(--border); color:var(--turquoise-soft);">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4 Q12.3 7 13.6 9.2 Q14.5 6.8 15.4 6.4 Q16.4 6.8 16.7 10.6 Q17.6 9 19.2 9.6 Q20.6 10.2 19 12 Q17.6 13.6 16 15 Q15.6 17 15 18.6 Q14.2 19.6 12 19.6"></path><path d="M12 4 Q11.7 7 10.4 9.2 Q9.5 6.8 8.6 6.4 Q7.6 6.8 7.3 10.6 Q6.4 9 4.8 9.6 Q3.4 10.2 5 12 Q6.4 13.6 8 15 Q8.4 17 9 18.6 Q9.8 19.6 12 19.6"></path><path d="M12 10.6 l.75 1.8 1.8.75 -1.8.75 -.75 1.8 -.75 -1.8 -1.8 -.75 1.8 -.75 z"></path></svg>
+            </div>
+            <div style="flex:1; min-width:0;">
+              <div style="display:flex; align-items:baseline; gap:10px;">
+                <span style="font-family:var(--font-script); font-size:1.5rem; letter-spacing:0.05em; color:var(--turquoise-soft); line-height:1;">01</span>
+                <h3 style="font-family:var(--font-body); font-weight:600; font-size:1.18rem; color:var(--cream); margin:0;">Elegís el informe</h3>
+              </div>
+              <p style="font-size:0.98rem; line-height:1.72; color:var(--cream-200); margin:8px 0 0;">Revisás las cinco opciones y elegís la que más resuena con lo que querés mirar. Podés empezar por cualquiera.</p>
+            </div>
+          </div>
+
+          <div class="fl-step" style="display:flex; align-items:flex-start; gap:20px;">
+            <div class="fl-step-dot" style="flex:none; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--cream-a08); border:1px solid var(--border); color:var(--turquoise-soft);">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 4 C 12 4 6 9 4.5 19.5"></path><path d="M19.5 4 C 19.5 11 14 17 4.5 19.5"></path><path d="M19.5 4 L 3 21"></path></svg>
+            </div>
+            <div style="flex:1; min-width:0;">
+              <div style="display:flex; align-items:baseline; gap:10px;">
+                <span style="font-family:var(--font-script); font-size:1.5rem; letter-spacing:0.05em; color:var(--turquoise-soft); line-height:1;">02</span>
+                <h3 style="font-family:var(--font-body); font-weight:600; font-size:1.18rem; color:var(--cream); margin:0;">Completás el formulario</h3>
+              </div>
+              <p style="font-size:0.98rem; line-height:1.72; color:var(--cream-200); margin:8px 0 0;" data-comment-anchor="29d8be85c4-p">Dejás tu nombre completo tal como aparece en tu documento, tu fecha de nacimiento y tu mail. Una vez que me llegue, coordinamos el pago por mail, y con eso armo tu informe.</p>
+            </div>
+          </div>
+
+          <div class="fl-step" style="display:flex; align-items:flex-start; gap:20px;">
+            <div class="fl-step-dot" style="flex:none; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--cream-a08); border:1px solid var(--border); color:var(--turquoise-soft);">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.2 A8.2 8.2 0 1 1 10.5 4.4 A6.3 6.3 0 0 0 20.5 14.2 Z"></path><path d="M17.8 4.2 l.45 1.15 1.15.45 -1.15.45 -.45 1.15 -.45 -1.15 -1.15 -.45 1.15 -.45 z" fill="currentColor" stroke="none"></path></svg>
+            </div>
+            <div style="flex:1; min-width:0;">
+              <div style="display:flex; align-items:baseline; gap:10px;">
+                <span style="font-family:var(--font-script); font-size:1.5rem; letter-spacing:0.05em; color:var(--turquoise-soft); line-height:1;">03</span>
+                <h3 style="font-family:var(--font-body); font-weight:600; font-size:1.18rem; color:var(--cream); margin:0;">Recibís tu informe</h3>
+              </div>
+              <p style="font-size:0.98rem; line-height:1.72; color:var(--cream-200); margin:8px 0 0;">En un plazo de 48 horas, recibís tu informe personalizado por mail, en formato digital. El proceso de leerlo es tuyo, a tu ritmo.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Formulario a la derecha -->
+        <div data-reveal>
+          <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+            <form onSubmit="{{ onSubmit }}" style="display:flex; flex-direction:column; gap:22px; background:{{ formBg }}; backdrop-filter:{{ cardBlur }}; -webkit-backdrop-filter:{{ cardBlur }}; border:1px solid var(--border); border-radius:var(--radius-lg); padding:clamp(28px,4vw,40px); box-shadow:var(--shadow-md);">
+              <x-import component-from-global-scope="FluyirDesignSystem_b40d34.Input" label="Nombre completo" name="nombre" placeholder="Tal como aparece en tu documento" required="{{ true }}" hint-size="100%,78px"></x-import>
+              <x-import component-from-global-scope="FluyirDesignSystem_b40d34.Input" label="Fecha de nacimiento" name="nacimiento" type="date" required="{{ true }}" hint-size="100%,78px"></x-import>
+              <x-import component-from-global-scope="FluyirDesignSystem_b40d34.Input" label="Email" name="email" type="email" placeholder="vos@ejemplo.com" required="{{ true }}" hint-size="100%,78px"></x-import>
+              <label style="display:flex; flex-direction:column; gap:8px; font-family:var(--font-body);">
+                <span style="font-size:0.875rem; font-weight:500; color:var(--cream-300);">Informe de interés</span>
+                <select name="informe" required defaultValue="" style="width:100%; padding:12px 44px 12px 16px; font-family:var(--font-body); font-size:1rem; color:var(--cream); background-color:var(--cream-a08); background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23CFC7B5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E&quot;); background-repeat:no-repeat; background-position:right 16px center; border:1px solid var(--border-strong); border-radius:var(--radius-md); outline:none; appearance:none; -webkit-appearance:none; cursor:pointer; color-scheme:dark;">
+                  <option value="" disabled style="background-color:var(--night); color:var(--cream-a64);">Elegí una opción</option>
+                  <sc-for list="{{ selectOptions }}" as="opt" hint-placeholder-count="6">
+                    <option value="{{ opt }}" style="background-color:var(--night); color:var(--cream);">{{ opt }}</option>
+                  </sc-for>
+                </select>
+              </label>
+              <x-import component-from-global-scope="FluyirDesignSystem_b40d34.Textarea" label="Mensaje (opcional)" name="mensaje" rows="{{ 4 }}" placeholder="Si querés contarme algo más, escribilo acá." hint-size="100%,150px"></x-import>
+              <x-import component-from-global-scope="FluyirDesignSystem_b40d34.Button" type="submit" variant="primary" size="lg" full="{{ true }}" hint-size="100%,56px">Quiero mi informe</x-import>
+              <p style="font-size:0.8rem; color:var(--cream-a64); text-align:center; line-height:1.6; margin:0;">Recibís tu informe por mail en un plazo de 48 horas a partir de la confirmación del pago.</p>
+            </form>
+          </sc-if>
+          <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center; background:var(--surface-alt); border:1px solid var(--border-strong); border-radius:var(--radius-lg); padding:clamp(40px,7vw,64px) clamp(28px,5vw,48px); box-shadow:var(--shadow-lg);">
+              <img src="assets/iso-f-cream.png" alt="" style="width:56px; margin:0 auto 8px; opacity:0.9;">
+              <p style="font-family:var(--font-body); font-weight:600; font-size:clamp(1.6rem,4vw,2.3rem); line-height:1.2; color:var(--cream); margin:14px 0 0;">Gracias. Recibí tus datos.</p>
+              <p style="font-size:1rem; line-height:1.72; color:var(--cream-200); max-width:420px; margin:18px auto 0;">Te voy a escribir por mail para coordinar el pago. Una vez confirmado, en 48 horas tenés tu informe personalizado, en formato digital.</p>
+              <button onClick="{{ onReset }}" style="margin-top:28px; background:none; border:1px solid var(--border-strong); border-radius:var(--radius-pill); padding:10px 22px; cursor:pointer; font-family:var(--font-body); font-size:0.9rem; font-weight:500; color:var(--cream-200);">Pedir otro informe</button>
+            </div>
+          </sc-if>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FRASE DESTACADA 2 ===================== -->
+  <section style="position:relative; min-height:clamp(440px,72vh,660px); display:flex; align-items:flex-start; justify-content:center; text-align:center; padding:clamp(20px,3vw,40px) clamp(20px,5vw,48px) clamp(56px,8vw,104px); background-image:url('assets/camino-ruta.png'); background-size:cover; background-position:center; overflow:hidden;">
+    <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(28,31,44,0.82) 0%, rgba(28,31,44,0.42) 40%, rgba(28,31,44,0.30) 70%, rgba(28,31,44,0.58) 100%);"></div>
+    <sc-if value="{{ showGrain }}" hint-placeholder-val="{{ true }}"><div class="fl-grain" style="position:absolute; inset:0;"></div></sc-if>
+    <div data-reveal style="position:relative; max-width:880px; margin:0;">
+      <img src="assets/iso-f-cream.png" alt="fluyir" style="width:clamp(58px,7vw,86px); height:auto; display:block; margin:0 auto 24px; opacity:0.92;">
+      <p style="font-family:var(--font-script); font-weight:400; font-size:clamp(1.9rem,4.4vw,3.1rem); line-height:1.35; letter-spacing:0.05em; color:var(--cream); margin:0; text-wrap:balance; text-shadow:0 2px 28px rgba(12,14,20,0.55);">el tiempo y su <span style="font-family:var(--font-body); font-weight:600; font-size:0.72em;">perspectiva</span>, traen <span style="font-family:var(--font-body); font-weight:600; font-size:0.72em;">entendimiento</span>.</p>
+    </div>
+  </section>
+
+  <!-- ===================== SOBRE MÍ ===================== -->
+  <section style="position:relative; padding:clamp(76px,10vw,132px) clamp(20px,5vw,48px); background:{{ secBgAlt }}; overflow:hidden;">
+    <sc-if value="{{ showGrain }}" hint-placeholder-val="{{ true }}"><div class="fl-grain" style="position:absolute; inset:0;"></div></sc-if>
+    <div data-reveal style="position:relative; max-width:var(--container-prose); margin:0 auto;">
+      <div>
+        <p class="fl-eyebrow">Sobre mí</p>
+        <h2 style="font-family:var(--font-body); font-weight:500; font-size:clamp(2.1rem,5vw,3.4rem); line-height:1.12; color:var(--cream); margin:14px 0 0;">Soy Paula.</h2>
+        <p style="font-size:clamp(1rem,1.6vw,1.1rem); line-height:1.75; color:var(--cream-200); margin:26px 0 0;">Hace tiempo que vengo mirando lo que incomoda. Desarmando lo que aprendí a mostrar, lo que guardé sin saber bien por qué, lo que repetía en automático sin preguntarme qué buscaba ahí. No es un proceso prolijo ni lineal: más bien una montaña rusa.</p>
+        <p style="font-size:clamp(1rem,1.6vw,1.1rem); line-height:1.75; color:var(--cream-200); margin:18px 0 0;">En el camino fui incorporando herramientas, que hoy se convirtieron en la base de Fluyir. La numerología me dio un mapa donde ubicar lo que sentía pero no podía nombrar. La escritura me dio el lugar para sacarlo de adentro y mirarlo de frente. Y los libros me mostraron que había otros transitando sentires similares. Ahí aprendí que la sombra, lo que incomoda o lo que cuesta mirar, no está separado de lo que entendés de vos, del autoconocimiento. Las dos cosas son parte del mismo proceso. El combo es completo, o no es.</p>
+        <p style="font-size:clamp(1rem,1.6vw,1.1rem); line-height:1.75; color:var(--cream-200); margin:18px 0 0;">No hablo desde afuera. Lo transito yo también, todos los días.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer style="position:relative; overflow:hidden; background:{{ footerBg }}; padding:clamp(34px,4vw,52px) clamp(20px,5vw,48px) clamp(24px,3vw,36px);">
+    <sc-if value="{{ showGrain }}" hint-placeholder-val="{{ true }}"><div class="fl-grain" style="position:absolute; inset:0; pointer-events:none;"></div></sc-if>
+    <div style="max-width:var(--container-wide); margin:0 auto; display:flex; flex-wrap:wrap; gap:clamp(20px,4vw,40px); justify-content:space-between; align-items:center; position:relative;" class="fl-footer-row">
+      <a href="https://instagram.com/fluyir22" target="_blank" rel="noopener" aria-label="Instagram · @fluyir22" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:var(--radius-md); color:var(--cream-200); border:1px solid var(--cream-a12); transition:color .3s var(--ease-flow), border-color .3s var(--ease-flow);" style-hover="color:var(--link); border-color:var(--cream-a40);">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="3.8"></circle><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"></circle></svg>
+      </a>
+      <div style="display:flex; align-items:center; gap:clamp(18px,3vw,28px);">
+        <img src="assets/logo-wordmark-cream-trim.png" alt="fluyir" style="height:38px; width:auto;">
+        <span style="flex:none; width:1px; height:32px; background:var(--cream-a20);"></span>
+        <p style="font-family:var(--font-body); font-weight:500; font-size:clamp(0.95rem,1.5vw,1.1rem); letter-spacing:0.01em; color:var(--cream-200); margin:0;">Espiritualidad sin glitter.</p>
+      </div>
+    </div>
+    <div style="max-width:var(--container-wide); margin:clamp(26px,3.5vw,38px) auto 0; padding-top:20px; border-top:1px solid var(--cream-a08); display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; font-size:0.76rem; color:var(--cream-a64);">
+      <span>© {{ year }} Fluyir. Todos los derechos reservados.</span>
+      <span>Informes escritos y personalizados.</span>
+    </div>
+  </footer>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 860 },
+  &quot;heroVariant&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;atmosferica&quot;, &quot;noche&quot;, &quot;editorial&quot;], &quot;default&quot;: &quot;atmosferica&quot;, &quot;tsType&quot;: &quot;'atmosferica' | 'noche' | 'editorial'&quot; },
+  &quot;fondoCompleto&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot; },
+  &quot;showGrain&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot; },
+  &quot;revealAnimations&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot; }
+}">
+class Component extends DCLogic {
+  state = { submitted: false };
+
+  componentDidMount() {
+    this._setupReveal();
+    this._setupNav();
+    this._preselectInforme();
+  }
+
+  _preselectInforme() {
+    let key = null;
+    try { key = new URLSearchParams(window.location.search).get('informe'); } catch (e) {}
+    if (!key) return;
+    const apply = () => {
+      const sel = document.querySelector('form select[name="informe"]');
+      if (sel) {
+        const opt = Array.from(sel.options).find(o => o.value === key);
+        if (opt) sel.value = key;
+      }
+      const c = document.getElementById('contacto');
+      if (c) { const y = c.getBoundingClientRect().top + window.scrollY - 78; window.scrollTo({ top: y, behavior: 'smooth' }); }
+    };
+    setTimeout(apply, 120);
+  }
+
+  _setupNav() {
+    const nav = document.getElementById('fl-nav');
+    if (!nav) return;
+    let lastY = window.scrollY || 0;
+    let ticking = false;
+    const apply = () => {
+      const y = window.scrollY || 0;
+      if (y > lastY + 4 && y > 90) {
+        nav.style.transform = 'translateY(-110%)';
+      } else if (y < lastY - 4 || y <= 24) {
+        nav.style.transform = 'translateY(0)';
+      }
+      lastY = y;
+      ticking = false;
+    };
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(apply); } };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    apply();
+  }
+
+  _setupReveal() {
+    const on = this.props.revealAnimations ?? true;
+    let els = [];
+    try { els = Array.from(document.querySelectorAll('[data-reveal]')); } catch (e) { return; }
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!on || reduce || !('IntersectionObserver' in window)) {
+      els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+      return;
+    }
+    els.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity 720ms cubic-bezier(0.22,0.61,0.36,1), transform 720ms cubic-bezier(0.22,0.61,0.36,1)';
+    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'none';
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(el => io.observe(el));
+  }
+
+  goTo(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const y = el.getBoundingClientRect().top + window.scrollY - 78;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+
+  renderVals() {
+    const variant = this.props.heroVariant ?? 'atmosferica';
+    const showGrain = this.props.showGrain ?? true;
+    const fondoCompleto = this.props.fondoCompleto ?? true;
+
+    // Tematización para la opción "fondo completo"
+    const secBg      = fondoCompleto ? 'transparent'            : 'var(--night)';
+    const secBgAlt   = fondoCompleto ? 'transparent'            : 'var(--turquoise-800)';
+    const secBgQuote = fondoCompleto ? 'transparent'            : 'var(--turquoise-800)';
+    const cardBg     = fondoCompleto ? 'rgba(31,34,46,0.55)'    : 'var(--surface)';
+    const formBg     = fondoCompleto ? 'rgba(31,34,46,0.60)'    : 'var(--surface)';
+    const footerBg   = fondoCompleto ? 'transparent'            : 'var(--night)';
+    const cardBlur   = fondoCompleto ? 'blur(10px)'             : 'none';
+
+    const meta = [
+      { keyword: 'Mapa', subname: 'Mapa Numérico', bajada: 'El terreno completo', slug: 'mapa-numerico',
+        resumen: 'Siete números con ubicaciones específicas que muestran tu energía cotidiana, tus aprendizajes, tu esencia, tu propósito. Es el informe más abarcativo, y por eso es la base de tu experiencia.' },
+      { keyword: 'Equipaje', subname: 'Vidas Pasadas, Regalo Divino, Sombra', bajada: 'Las capas más profundas', slug: 'vidas-pasadas',
+        resumen: 'Tres dimensiones que conviven en vos al mismo tiempo: la memoria que ya traés, el don que está disponible aunque todavía no lo reconozcas del todo, y lo que tapaste porque en algún momento fue mejor no mostrarlo. Es el informe que va directo a lo que más cuesta mirar.' },
+      { keyword: 'Brújula', subname: 'Ausentes, Dominantes, Excesivos', bajada: 'Cómo se distribuye tu energía', slug: 'grilla',
+        resumen: 'La frecuencia con la que aparece cada número en tu nombre revela tres categorías: lo que todavía no se activó, lo que ya es un recurso fuerte en vos, y lo que está tan presente que puede no estar equilibrado. Las tres son información sobre cómo te movés.' },
+      { keyword: 'Ruta', subname: 'Etapas de Vida', bajada: 'Tu recorrido', slug: 'etapas-de-vida',
+        resumen: 'La vida se organiza en cuatro etapas, cada una con su propia energía, su aprendizaje y su tipo de experiencia. Este informe las traduce en información concreta: qué se abre en cada una y qué desafío convive con esa apertura.' },
+      { keyword: 'Coordenadas', subname: 'Año Personal y Año Emocional', bajada: 'Dónde estás parada hoy', slug: 'ano-personal',
+        resumen: 'Dos capas del tiempo que se complementan: la dirección del ciclo que estás atravesando y el estado interno desde el que lo habitás. Una lectura para entender qué está activo en este momento puntual.' }
+    ];
+
+    const accents = { 'mapa-numerico':'#8B7BC0', 'vidas-pasadas':'#C6884A', 'grilla':'#C7A646', 'etapas-de-vida':'#6E9C7B', 'ano-personal':'#5E8AC0' };
+    const informes = meta.map((d, i) => ({
+      keyword: d.keyword,
+      subname: d.subname,
+      accent: accents[d.slug],
+      cover: 'assets/mockt-' + d.slug + '.png',
+      bajada: d.bajada,
+      resumen: d.resumen,
+      isMapa: d.slug === 'mapa-numerico',
+      isEquipaje: d.slug === 'vidas-pasadas',
+      isBrujula: d.slug === 'grilla',
+      isRuta: d.slug === 'etapas-de-vida',
+      isCoordenadas: d.slug === 'ano-personal',
+      num: String(i + 1).padStart(2, '0'),
+      coverId: 'cover-card-' + d.slug,
+      coverHint: 'Portada · ' + d.keyword,
+      href: 'Informe.dc.html?slug=' + d.slug,
+      cardBg,
+      cardBlur
+    }));
+
+    const selectOptions = [
+      'Mapa',
+      'Equipaje',
+      'Brújula',
+      'Ruta',
+      'Coordenadas',
+      'No estoy segura, quiero asesoramiento'
+    ];
+
+    return {
+      isAtmos: variant === 'atmosferica',
+      isNoche: variant === 'noche',
+      isEditorial: variant === 'editorial',
+      showGrain,
+      fondoCompleto,
+      showOwnHeroBg: !fondoCompleto,
+      pageBg: fondoCompleto ? 'transparent' : 'var(--night)',
+      secBg, secBgAlt, secBgQuote, formBg, footerBg, cardBlur,
+      informes,
+      selectOptions,
+      year: new Date().getFullYear(),
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      onSubmit: (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const val = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
+        try {
+          const data = new FormData();
+          data.append('nombre', val('fl-nombre-completo'));
+          const nac = val('fl-fecha-de-nacimiento');
+          const nacFmt = /^\d{4}-\d{2}-\d{2}$/.test(nac) ? nac.split('-').reverse().join('-') : nac;
+          data.append('nacimiento', nacFmt);
+          data.append('email', val('fl-email'));
+          data.append('mensaje', val('fl-mensaje-(opcional)'));
+          const sel = form.querySelector('select[name="informe"]');
+          data.append('informe', sel ? sel.value : '');
+          fetch('https://script.google.com/macros/s/AKfycbyFeCvdJgL8_hYvJ3XxKoP6eCE7xmW4R-YYwEi_ld5C8n1tAaAYosnGK9lvGgq8jz09/exec', { method: 'POST', body: data, mode: 'no-cors' });
+        } catch (err) {}
+        this.setState({ submitted: true });
+      },
+      onReset: () => this.setState({ submitted: false }),
+      goInformes: () => this.goTo('informes'),
+      goContacto: () => this.goTo('contacto')
+    };
+  }
+}
+</script>
+</body>
+</html>

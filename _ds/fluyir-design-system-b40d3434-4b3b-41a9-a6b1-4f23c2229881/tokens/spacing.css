@@ -1,0 +1,27 @@
+/* ============================================================
+   FLUYIR · Spacing & layout tokens
+   Calm, breathing layouts — "cada post respira". Generous space.
+   8px base rhythm.
+   ============================================================ */
+:root {
+  --space-0:   0;
+  --space-1:   0.25rem;  /* 4 */
+  --space-2:   0.5rem;   /* 8 */
+  --space-3:   0.75rem;  /* 12 */
+  --space-4:   1rem;     /* 16 */
+  --space-5:   1.5rem;   /* 24 */
+  --space-6:   2rem;     /* 32 */
+  --space-7:   3rem;     /* 48 */
+  --space-8:   4rem;     /* 64 */
+  --space-9:   6rem;     /* 96 */
+  --space-10:  8rem;     /* 128 */
+
+  /* ---- Container widths ---- */
+  --container-prose:  42rem;  /* 672 — editorial reading measure */
+  --container-narrow: 34rem;  /* 544 — app cards / forms */
+  --container-wide:   72rem;  /* 1152 — marketing sections */
+
+  /* ---- Page gutters ---- */
+  --gutter:        1.5rem;
+  --gutter-lg:     3rem;
+}

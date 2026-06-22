@@ -1,0 +1,47 @@
+/* ============================================================
+   FLUYIR · Effects — radii, borders, shadows, blur, motion
+   Soft & organic but elegant. Shadows are deep and quiet on dark.
+   ============================================================ */
+:root {
+  /* ---- Corner radii (soft, organic) ---- */
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   22px;
+  --radius-xl:   32px;
+  --radius-pill: 999px;
+
+  /* ---- Borders ---- */
+  --border-hairline: 1px solid var(--border);
+  --border-soft:     1px solid var(--border-strong);
+
+  /* ---- Shadows (quiet, deep — for a dark UI) ---- */
+  --shadow-sm:   0 1px 2px rgba(17,20,28,0.40);
+  --shadow-md:   0 4px 16px rgba(17,20,28,0.45);
+  --shadow-lg:   0 14px 40px rgba(17,20,28,0.55);
+  --shadow-xl:   0 28px 70px rgba(17,20,28,0.60);
+  /* warm glow — for accent/hero moments, used sparingly */
+  --shadow-glow: 0 0 48px rgba(201,138,75,0.22);
+  /* soft inner sheen on cream surfaces */
+  --shadow-inset: inset 0 1px 0 var(--cream-a08);
+
+  /* ---- Blur (used over photography / atmospheric layers) ---- */
+  --blur-sm:  blur(8px); /* @kind other */
+  --blur-md:  blur(18px); /* @kind other */
+  --blur-lg:  blur(40px); /* @kind other */
+
+  /* ---- Protection gradient (cream text over imagery) ---- */
+  --scrim-bottom: linear-gradient(to top, rgba(31,34,46,0.92) 0%, rgba(31,34,46,0.55) 40%, transparent 100%); /* @kind other */
+  --scrim-full:   linear-gradient(180deg, rgba(31,34,46,0.30), rgba(31,34,46,0.78)); /* @kind other */
+
+  /* ---- Film grain texture toggle (atmospheric backgrounds) ---- */
+  --grain-opacity: 0.05; /* @kind other */
+
+  /* ---- Motion — slow, water-like; nothing bouncy ---- */
+  --ease-flow:  cubic-bezier(0.22, 0.61, 0.36, 1); /* @kind other */
+  --ease-soft:  cubic-bezier(0.4, 0.0, 0.2, 1);      /* @kind other */
+  --dur-fast:   140ms; /* @kind other */
+  --dur-base:   240ms; /* @kind other */
+  --dur-slow:   420ms; /* @kind other */
+  --dur-amble:  720ms; /* @kind other */
+}

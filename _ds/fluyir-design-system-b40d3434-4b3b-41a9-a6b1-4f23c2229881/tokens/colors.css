@@ -1,0 +1,78 @@
+/* ============================================================
+   FLUYIR · Color tokens
+   Palette extracted from the brand brief (08. Identidad Visual).
+   Dark, contemplative, cinematic. Cream on night-blue is primary.
+   ============================================================ */
+:root {
+  /* ---- Brand core (named) ---- */
+  --night:       #2D3142;  /* Azul Noche — primary background & logo */
+  --cream:       #F0EBE0;  /* Crema — text on dark, cream logo */
+  --turquoise:   #508075;  /* Turquesa Apagado — natural accent & alt background */
+  --teal-mid:    #5F7E80;  /* Teal Medio — secondary, skies, balance */
+
+  /* ---- Tonal extensions (derived for UI depth) ---- */
+  --night-900:   #1F222E;  /* deeper than night — app chrome, recessed */
+  --night-800:   #2D3142;  /* = --night */
+  --night-700:   #383D52;  /* raised surface on night */
+  --night-600:   #474D66;  /* hover raise / hairline-strong */
+
+  /* Turquesa Apagado ramp (built around #508075) — the organic register */
+  --turquoise-900: #1E302C; /* deepest */
+  --turquoise-800: #2C443E;
+  --turquoise-700: #3D5F56; /* raised turquoise surface */
+  --turquoise-600: #508075; /* = --turquoise (base) */
+  --turquoise-soft: #5F968A; /* lighter turquoise, hover/links */
+
+  --cream-100:   #F0EBE0;  /* = --cream */
+  --cream-200:   #E2DBCC;  /* slightly dimmed cream */
+  --cream-300:   #CFC7B5;  /* muted cream / captions */
+
+  /* ---- Warm accents (the "destellos de luz cálida") ----
+     NOTE: warm tones are reserved for IMAGERY / ATMOSPHERE only
+     (photo light flashes, hero/quote glow). They are NOT used as UI
+     chrome — the interface accent is turquoise (see SEMANTIC ALIASES). */
+  --ember:       #C98A4B;  /* amber — warm light in imagery */
+  --ember-soft:  #D9A86E;  /* lighter amber */
+  --glow:        #E6C49A;  /* peach / durazno — warm light highlight */
+  --gold:        #CBA15A;  /* dorado — fine detail, eyebrows, dividers */
+
+  /* ---- Functional (kept muted, never neon) ---- */
+  --positive:    #7FA98A;  /* sage green */
+  --caution:     #C98A4B;  /* reuse ember */
+  --critical:    #B06A5E;  /* dusty terracotta */
+
+  /* ---- Alpha helpers on cream (for borders / overlays on dark) ---- */
+  --cream-a08:   rgba(240,235,224,0.08);
+  --cream-a12:   rgba(240,235,224,0.12);
+  --cream-a20:   rgba(240,235,224,0.20);
+  --cream-a40:   rgba(240,235,224,0.40);
+  --cream-a64:   rgba(240,235,224,0.64);
+  --night-a40:   rgba(31,34,46,0.40);
+  --night-a64:   rgba(31,34,46,0.64);
+
+  /* ============================================================
+     SEMANTIC ALIASES — prefer these in components
+     ============================================================ */
+  --bg:              var(--night);
+  --bg-deep:         var(--night-900);
+  --surface:         var(--night-700);
+  --surface-alt:     var(--turquoise-800);
+  --surface-raised:  var(--night-600);
+
+  --text:            var(--cream);
+  --text-muted:      var(--cream-300);
+  --text-faint:      var(--cream-a64);
+  --text-on-accent:  var(--cream);
+
+  /* Interface accent = Turquesa Apagado. Warm tones (ember/glow) stay in imagery only. */
+  --accent:          var(--turquoise);
+  --accent-hover:    var(--turquoise-soft);
+  --accent-quiet:    var(--gold);        /* eyebrows / fine detail */
+  --highlight:       var(--glow);        /* warm atmospheric glow (imagery) */
+
+  --border:          var(--cream-a12);
+  --border-strong:   var(--cream-a20);
+  --ring:            rgba(80,128,117,0.55); /* turquoise focus ring */
+
+  --link:            var(--turquoise-soft);
+}
