@@ -36,8 +36,23 @@
     .fl-grain { background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E"); background-repeat: repeat; opacity: 0.5; }
     input, textarea, select { font-family: var(--font-body); }
     @media (max-width: 520px) { .fl-footer-row { flex-direction: column !important; align-items: flex-start !important; } }
-    @media (max-width: 760px) {
-      #fl-nav2 a[data-nav-link] { display: none; }
+    .fl-nav-links { display:flex; align-items:center; gap:clamp(13px,2.4vw,24px); white-space:nowrap; }
+    .fl-nav-link { font-family:var(--font-body); font-size:0.86rem; font-weight:500; letter-spacing:0.02em; color:var(--cream-a64); padding:2px 0; border-bottom:1.5px solid transparent; text-decoration:none; transition:color .25s, border-color .25s; }
+    .fl-nav-link:hover { color:var(--cream); }
+    .fl-nav-link.active { font-weight:600; color:var(--cream); border-bottom:1.5px solid var(--accent); }
+    .fl-nav-link-pedir { font-family:var(--font-body); font-size:0.86rem; font-weight:500; letter-spacing:0.02em; color:var(--cream-200); text-decoration:none; transition:color .25s; }
+    .fl-nav-link-pedir:hover { color:var(--cream); }
+    .fl-nav-divider { width:1px; height:14px; background:var(--cream-a20); flex:none; }
+    .fl-hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; }
+    .fl-hamburger span { display:block; width:22px; height:2px; background:var(--cream); border-radius:2px; transition:transform .3s, opacity .3s; }
+    .fl-mobile-menu { display:none; position:fixed; top:0; left:0; right:0; bottom:0; z-index:59; background:rgba(31,34,46,0.97); flex-direction:column; align-items:center; justify-content:center; gap:32px; }
+    .fl-mobile-menu.open { display:flex; }
+    .fl-mobile-menu a { font-family:var(--font-body); font-size:1.2rem; font-weight:500; color:var(--cream-200); text-decoration:none; letter-spacing:0.02em; }
+    .fl-mobile-menu a.active { font-weight:600; color:var(--cream); border-bottom:1.5px solid var(--accent); padding-bottom:2px; }
+    .fl-mobile-menu a:hover { color:var(--cream); }
+    @media (max-width: 640px) {
+      .fl-nav-links { display:none; }
+      .fl-hamburger { display:flex; }
     }
   </style>
 </head>
@@ -51,13 +66,31 @@
 
   <div style="position:relative; z-index:1;">
 
+  <!-- MOBILE MENU -->
+  <div id="fl-mobile-menu" class="fl-mobile-menu">
+    <a href="informe.html?slug=mapa-numerico" data-slug="mapa-numerico">Mapa</a>
+    <a href="informe.html?slug=vidas-pasadas" data-slug="vidas-pasadas">Equipaje</a>
+    <a href="informe.html?slug=grilla" data-slug="grilla">Brújula</a>
+    <a href="informe.html?slug=etapas-de-vida" data-slug="etapas-de-vida">Ruta</a>
+    <a href="informe.html?slug=ano-personal" data-slug="ano-personal">Coordenadas</a>
+    <a href="#pedir" onclick="document.getElementById('fl-mobile-menu').classList.remove('open');">Pedir</a>
+  </div>
+
   <!-- NAV -->
   <nav id="fl-nav2" style="position:fixed; top:0; left:0; right:0; z-index:60; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px clamp(20px,5vw,48px); background:transparent; transition:transform .35s var(--ease-flow), background .35s var(--ease-flow);">
     <a href="index.html#top" style="display:flex; align-items:center;"><img src="assets/logo-wordmark-cream-trim.png" alt="fluyir" style="height:38px; width:auto;"></a>
-    <div style="display:flex; align-items:center; gap:clamp(18px,4vw,34px);">
-      <a href="index.html#informes" data-nav-link style="font-family:var(--font-body); font-size:0.9rem; font-weight:500; letter-spacing:0.02em; color:var(--cream-200); text-decoration:none;">Informes</a>
-      <a href="#pedir" data-nav-link style="font-family:var(--font-body); font-size:0.9rem; font-weight:500; letter-spacing:0.02em; color:var(--cream-200); text-decoration:none;">Pedir</a>
+    <div class="fl-nav-links" id="fl-nav-links">
+      <a href="informe.html?slug=mapa-numerico" class="fl-nav-link" data-slug="mapa-numerico">Mapa</a>
+      <a href="informe.html?slug=vidas-pasadas" class="fl-nav-link" data-slug="vidas-pasadas">Equipaje</a>
+      <a href="informe.html?slug=grilla" class="fl-nav-link" data-slug="grilla">Brújula</a>
+      <a href="informe.html?slug=etapas-de-vida" class="fl-nav-link" data-slug="etapas-de-vida">Ruta</a>
+      <a href="informe.html?slug=ano-personal" class="fl-nav-link" data-slug="ano-personal">Coordenadas</a>
+      <span class="fl-nav-divider"></span>
+      <a href="#pedir" class="fl-nav-link-pedir">Pedir</a>
     </div>
+    <button class="fl-hamburger" id="fl-hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- HERO -->
@@ -325,6 +358,21 @@
 
   document.title = rep.keyword + ' · Fluyir';
   document.getElementById('footer-year').textContent = '© ' + new Date().getFullYear() + ' Fluyir. Todos los derechos reservados.';
+
+  // Marcar link activo en nav y mobile menu
+  document.querySelectorAll('[data-slug]').forEach(function(a) {
+    if (a.getAttribute('data-slug') === slug) a.classList.add('active');
+  });
+
+  // Hamburger
+  var hamburger = document.getElementById('fl-hamburger');
+  var mobileMenu = document.getElementById('fl-mobile-menu');
+  hamburger.addEventListener('click', function() {
+    mobileMenu.classList.toggle('open');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() { mobileMenu.classList.remove('open'); });
+  });
 
   // Nav hide on scroll
   var nav = document.getElementById('fl-nav2');
