@@ -712,17 +712,7 @@
     });
   });
 
-  // "Ver informe" → preselect en el formulario y scroll al contacto
-  document.querySelectorAll('.fl-ver-informe').forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      e.preventDefault();
-      var informe = this.getAttribute('data-informe');
-      var sel = document.getElementById('fl-select-informe');
-      if (sel && informe) sel.value = informe;
-      var contacto = document.getElementById('contacto');
-      if (contacto) { var y = contacto.getBoundingClientRect().top + window.scrollY - 78; window.scrollTo({ top: y, behavior: 'smooth' }); }
-    });
-  });
+  // "Quiero este informe" → navega a la landing del informe
 
   // Preselect desde URL param ?informe=Mapa
   (function () {
