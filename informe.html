@@ -196,9 +196,10 @@
         <p class="fl-eyebrow">Pedir el informe</p>
         <h2 style="font-family:var(--font-body); font-weight:500; font-size:clamp(2rem,4.6vw,3rem); line-height:1.14; color:var(--cream); margin:14px 0 0; text-wrap:balance;">Empezá cuando quieras.</h2>
         <p style="font-size:clamp(1rem,1.6vw,1.1rem); line-height:1.72; color:var(--cream-200); margin:18px 0 0;">Completá el formulario con tus datos. Coordinamos el pago y en un plazo de 48 horas lo recibís por mail, listo para leer.</p>
-        <div class="fl-pedir-price" style="display:inline-flex; flex-direction:column; align-items:center; gap:6px; margin:30px 0 0; padding:22px 40px; border:1px solid var(--border); border-radius:var(--radius-lg); background:var(--cream-a08);">
+        <div class="fl-pedir-price" style="display:inline-flex; flex-direction:column; align-items:center; gap:8px; margin:30px 0 0; padding:24px 48px; border:1px solid var(--border); border-radius:var(--radius-lg); background:var(--cream-a08); text-align:center;">
           <span style="font-size:0.74rem; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--cream-a64);">Inversión</span>
           <span id="rep-price" style="font-weight:500; font-size:2rem; line-height:1; letter-spacing:-0.01em; color:var(--cream); margin-top:2px;"></span>
+          <span id="rep-price-ars" style="font-size:0.9rem; font-weight:500; color:var(--cream-a64); letter-spacing:0.01em;"></span>
         </div>
       </div>
 
@@ -285,7 +286,7 @@
       ],
       quote: 'se vuelve a <span style="font-family:var(--font-body);font-weight:600;font-size:0.66em;letter-spacing:0;">empezar</span> muchas veces, pero nunca es desde <span style="font-family:var(--font-body);font-weight:600;font-size:0.66em;letter-spacing:0;">cero</span>.',
       photo: 'assets/frase-mapa.jpg', photoPos: 'center 72%',
-      selectKey: 'Mapa', price: '77 €'
+      selectKey: 'Mapa', price: '77 €', priceARS: '95.000'
     },
     'vidas-pasadas': {
       keyword: 'Equipaje', name: 'Vidas Pasadas · Regalo Divino · Sombra', bajada: 'Las capas más profundas',
@@ -295,7 +296,7 @@
       ],
       quote: 'vas a <span style="font-family:var(--font-body);font-weight:600;font-size:0.66em;letter-spacing:0;">salir</span> de ahí, y no vas a ser la <span style="font-family:var(--font-body);font-weight:600;font-size:0.66em;letter-spacing:0;">misma</span>.',
       photo: 'assets/frase-equipaje.jpg', photoPos: 'center 60%',
-      selectKey: 'Equipaje', price: '55 €'
+      selectKey: 'Equipaje', price: '55 €', priceARS: '70.000'
     },
     'grilla': {
       keyword: 'Brújula', name: 'Ausentes · Dominantes · Excesivos', bajada: 'Cómo se distribuye tu energía',
@@ -305,7 +306,7 @@
       ],
       quote: 'a veces evitamos el real <span style="font-family:var(--font-body);font-weight:600;font-size:0.66em;letter-spacing:0;">contraste</span>. elegimos los <span style="font-family:var(--font-body);font-weight:600;font-size:0.66em;letter-spacing:0;">grises</span> seguros.',
       photo: 'assets/frase-grilla.jpg', photoPos: 'center 62%',
-      selectKey: 'Brújula', price: '55 €'
+      selectKey: 'Brújula', price: '55 €', priceARS: '70.000'
     },
     'etapas-de-vida': {
       keyword: 'Ruta', name: 'Etapas de Vida', bajada: 'Tu recorrido',
@@ -315,7 +316,7 @@
       ],
       quote: 'si lo único <span style="font-family:var(--font-body);font-weight:600;font-size:0.66em;letter-spacing:0;">constante</span> es el cambio, entonces para cambiar hay que <span style="font-family:var(--font-body);font-weight:600;font-size:0.66em;letter-spacing:0;">permanecer</span>.',
       photo: 'assets/frase-ruta.jpg', photoPos: 'center 74%',
-      selectKey: 'Ruta', price: '66 €'
+      selectKey: 'Ruta', price: '66 €', priceARS: '80.000'
     },
     'ano-personal': {
       keyword: 'Coordenadas', name: 'Año Personal y Año Emocional', bajada: 'Dónde estás parada hoy',
@@ -325,7 +326,7 @@
       ],
       quote: 'somos <span style="font-family:var(--font-body);font-weight:600;font-size:0.66em;letter-spacing:0;">seres</span> cambiantes.',
       photo: 'assets/frase-coordenadas-acantilado.jpg', photoPos: 'center 45%',
-      selectKey: 'Coordenadas', price: '55 €'
+      selectKey: 'Coordenadas', price: '55 €', priceARS: '70.000'
     }
   };
 
@@ -343,6 +344,7 @@
   var priceEl = document.getElementById('rep-price');
   var parts = rep.price.split(' ');
   priceEl.innerHTML = parts[0] + '<span style="font-size:0.56em;font-weight:500;letter-spacing:0;color:var(--cream-a64);margin-left:5px;">' + (parts[1] || '€') + '</span>';
+  document.getElementById('rep-price-ars').textContent = '$ ' + rep.priceARS + ' ARS';
 
   var bodyEl = document.getElementById('rep-body');
   rep.body.forEach(function(p) {
